@@ -102,6 +102,10 @@ async def elicit_with_validation(
         # Validate and parse the content using the schema
         validated_data = schema.model_validate(result.content)
         return AcceptedElicitation(data=validated_data)
+    if result.action == "accept":
+        # Validate the empty result
+        validated_data = schema.model_validate({})
+        return AcceptedElicitation(data=validated_data)
     elif result.action == "decline":
         return DeclinedElicitation()
     elif result.action == "cancel":
